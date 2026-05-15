@@ -1,0 +1,264 @@
+\chapter{模块使用示例}
+
+本章展示模板中所有可用模块的用法。
+
+% ============================================================
+% 1. 代码块
+% ============================================================
+\section{代码块}
+
+\subsection{带标题的代码块}
+
+\listingcaption{Hello World 示例}
+\begin{lstlisting}[language=C]
+#include <stdio.h>
+
+int main() {
+    printf("Hello, World!\n");
+    return 0;
+}
+\end{lstlisting}
+\label{lst:hello}
+
+\subsection{不带标题的代码块}
+
+\begin{lstlisting}[language=Python]
+def fibonacci(n):
+    if n <= 1:
+        return n
+    return fibonacci(n - 1) + fibonacci(n - 2)
+\end{lstlisting}
+
+\subsection{行内代码}
+
+使用 \texttt{texttt} 命令可以插入行内代码，例如 \texttt{int main()} 或 \texttt{./build/run}。
+
+% ============================================================
+% 2. 图片
+% ============================================================
+\section{图片}
+
+\subsection{标准图片}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\textwidth]{images/example.png}
+    \caption{示例图片}
+    \label{fig:example}
+\end{figure}
+
+\subsection{占位图片}
+
+当图片尚未准备好时，可以使用占位图片：
+
+\placeholderfigure{架构设计图}{此处将替换为实际的架构图}
+
+\subsection{并排子图}
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{images/example.png}
+        \caption{子图 A}
+        \label{fig:sub-a}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{images/example.png}
+        \caption{子图 B}
+        \label{fig:sub-b}
+    \end{subfigure}
+    \caption{并排子图示例}
+    \label{fig:subfigures}
+\end{figure}
+
+% ============================================================
+% 3. 表格
+% ============================================================
+\section{表格}
+
+\subsection{标准三线表}
+
+\begin{table}[H]
+    \centering
+    \caption{性能测试结果（ms）}
+    \label{tab:performance}
+    \begin{tabular}{lrrr}
+        \toprule
+        \textbf{测试项} & \textbf{方法 A} & \textbf{方法 B} & \textbf{方法 C} \\
+        \midrule
+            小规模  & 0.001 & 0.010 & 0.500 \\
+            中规模  & 1.234 & 5.678 & 9.012 \\
+            大规模  & 100.0 & 50.00 & 10.00 \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\subsection{自适应宽度表格}
+
+\begin{table}[H]
+    \centering
+    \caption{模块说明}
+    \label{tab:modules}
+    \begin{tabularx}{\textwidth}{lY}
+        \toprule
+        \textbf{模块} & \textbf{说明} \\
+        \midrule
+        \texttt{main.c}   & 主程序入口，负责协调各模块的调用 \\
+        \texttt{utils.c}   & 工具函数集合，提供计时、日志等通用功能 \\
+        \texttt{core.c}    & 核心算法实现 \\
+        \bottomrule
+    \end{tabularx}
+\end{table}
+
+\subsection{多行合并表格}
+
+\begin{table}[H]
+    \centering
+    \caption{多行合并示例}
+    \label{tab:multirow}
+    \begin{tabular}{llr}
+        \toprule
+        \textbf{类别} & \textbf{子项} & \textbf{数值} \\
+        \midrule
+        \multirow{2}{*}{CPU} & 单线程 & 100.0 \\
+                             & 多线程 & 20.0  \\
+        \midrule
+        \multirow{2}{*}{GPU} & 传输   & 5.0   \\
+                             & 计算   & 1.0   \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+% ============================================================
+% 4. 数学公式
+% ============================================================
+\section{数学公式}
+
+\subsection{行内公式}
+
+矩阵乘法 $C = A \times B$ 的时间复杂度为 $O(n^3)$，空间复杂度为 $O(n^2)$。
+
+\subsection{行间公式}
+
+矩阵乘法的定义：
+
+$$
+C_{ij} = \sum_{k=1}^{n} A_{ik} \cdot B_{kj}
+$$
+
+行主序与列主序的等价关系：
+
+$$
+C_{\text{row}} = A_{\text{row}} \times B_{\text{row}} \quad \Longleftrightarrow \quad C_{\text{col}}^T = B_{\text{col}}^T \times A_{\text{col}}^T
+$$
+
+\subsection{对齐多行公式}
+
+\begin{align}
+    f(x) &= ax^2 + bx + c \\
+    f'(x) &= 2ax + b \\
+    f''(x) &= 2a
+\end{align}
+
+% ============================================================
+% 5. 列表
+% ============================================================
+\section{列表}
+
+\subsection{有序列表}
+
+\begin{enumerate}
+    \item 第一步：初始化数据结构
+    \item 第二步：执行核心算法
+    \item 第三步：输出结果并释放资源
+\end{enumerate}
+
+\subsection{无序列表}
+
+\begin{itemize}
+    \item \textbf{模块 A}：负责数据输入与预处理
+    \item \textbf{模块 B}：负责核心计算
+    \item \textbf{模块 C}：负责结果输出与可视化
+\end{itemize}
+
+\subsection{紧凑列表}
+
+\begingroup
+\setstretch{1}
+\begin{itemize}
+    \setlength{\itemsep}{0pt}
+    \setlength{\parsep}{0pt}
+    \setlength{\parskip}{0pt}
+    \setlength{\topsep}{0pt}
+    \item \textbf{操作系统}：Ubuntu 24.04
+    \item \textbf{编译器}：gcc 13.3.0
+    \item \textbf{CPU}：AMD EPYC 9654
+\end{itemize}
+\endgroup
+
+% ============================================================
+% 6. 引用块（Markdown 风格）
+% ============================================================
+\section{引用块}
+
+\begin{mdquote}
+这是一个 Markdown 风格的引用块，适用于补充说明、注意事项或备注信息。\\
+
+引用块支持换行，使用 \texttt{\textbackslash\textbackslash} 进行手动换行。可以在其中使用
+\textbf{粗体}、\textit{斜体} 等格式。
+\end{mdquote}
+
+% ============================================================
+% 7. 交叉引用
+% ============================================================
+\section{交叉引用}
+
+如代码~\ref{lst:hello} 所示，这是一个简单的 C 程序。
+
+表~\ref{tab:performance} 展示了性能测试结果。
+
+图~\ref{fig:example} 为示例图片。
+
+% ============================================================
+% 8. 算法伪代码
+% ============================================================
+\section{算法伪代码}
+
+\begin{algorithm}[H]
+    \caption{矩阵乘法朴素算法}
+    \label{alg:matmul}
+    \begin{algorithmic}[1]
+        \REQUIRE 矩阵 $A \in \mathbb{R}^{m \times p}$, 矩阵 $B \in \mathbb{R}^{p \times n}$
+        \ENSURE 矩阵 $C = A \times B \in \mathbb{R}^{m \times n}$
+        \FOR{$i = 1$ \TO $m$}
+            \FOR{$j = 1$ \TO $n$}
+                \STATE $C_{ij} \leftarrow 0$
+                \FOR{$k = 1$ \TO $p$}
+                    \STATE $C_{ij} \leftarrow C_{ij} + A_{ik} \cdot B_{kj}$
+                \ENDFOR
+            \ENDFOR
+        \ENDFOR
+        \RETURN $C$
+    \end{algorithmic}
+\end{algorithm}
+
+% ============================================================
+% 9. 超链接
+% ============================================================
+\section{超链接}
+
+项目源代码托管于 \href{https://github.com/example/project}{GitHub}。
+
+更多信息请参阅 \url{https://example.com}。
+
+% ============================================================
+% 10. 字体命令
+% ============================================================
+\section{字体命令}
+
+{\songti 宋体文本示例}、{\heiti 黑体文本示例}、{\kaishu 楷书文本示例}、{\fangsong 仿宋文本示例}。
+
+\textbf{粗体}、\textit{斜体}、\texttt{等宽字体}、\textsf{无衬线字体}。

@@ -1,0 +1,317 @@
+% ============================================================
+% csreport.sty
+% A reusable Computer Science report style
+% Compile with XeLaTeX
+% ============================================================
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{csreport}[2026/04/29 Reusable CS Report Template]
+
+% ============================================================
+% 1. Page Layout
+% ============================================================
+\RequirePackage[a4paper,margin=2.5cm]{geometry}
+\RequirePackage{setspace}
+\RequirePackage{fancyhdr}
+\RequirePackage{titlesec}
+\RequirePackage{tocloft}
+
+% ============================================================
+% 2. Chinese Support
+% ============================================================
+% This package is intended to be compiled with XeLaTeX.
+\RequirePackage[UTF8,fontset=none]{ctex}
+\setmainfont{TeX Gyre Termes}
+\setmonofont{Maple Mono CN}
+\setCJKmainfont{Noto Serif CJK SC}
+\setCJKsansfont{Noto Sans CJK SC}
+\setCJKmonofont{Maple Mono CN}
+\setCJKfamilyfont{zhsong}{Noto Serif CJK SC}
+\setCJKfamilyfont{zhhei}{Noto Sans CJK SC}
+\setCJKfamilyfont{zhkai}{Noto Serif CJK SC}
+\setCJKfamilyfont{zhfs}{Noto Serif CJK SC}
+\newcommand{\songti}{\CJKfamily{zhsong}}
+\newcommand{\heiti}{\CJKfamily{zhhei}}
+\newcommand{\kaishu}{\CJKfamily{zhkai}}
+\newcommand{\fangsong}{\CJKfamily{zhfs}}
+
+% ============================================================
+% 3. Math, Figures, Tables
+% ============================================================
+\RequirePackage{amsmath, amssymb, amsfonts}
+\RequirePackage{graphicx}
+\RequirePackage{float}
+\RequirePackage{subcaption}
+\RequirePackage{booktabs}
+\RequirePackage{array}
+\RequirePackage{tabularx}
+\RequirePackage{longtable}
+\RequirePackage{multirow}
+
+% ============================================================
+% 4. Colors and Hyperlinks
+% ============================================================
+\RequirePackage{xcolor}
+\RequirePackage{hyperref}
+
+\definecolor{mainblue}{RGB}{20, 60, 120}
+\definecolor{lightblue}{RGB}{235, 242, 252}
+\definecolor{codegray}{RGB}{245, 245, 245}
+\definecolor{commentgreen}{RGB}{0, 120, 60}
+\definecolor{keywordblue}{RGB}{0, 70, 180}
+\definecolor{stringred}{RGB}{170, 30, 30}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=mainblue,
+    citecolor=mainblue,
+    urlcolor=mainblue
+}
+
+% ============================================================
+% 5. Code Listing
+% ============================================================
+\RequirePackage{listings}
+\RequirePackage{tcolorbox}
+\tcbuselibrary{listings,breakable,skins}
+
+% Markdown-like note block
+\newenvironment{mdquote}{
+  \begin{tcolorbox}[
+    enhanced,
+    breakable,
+    frame hidden,
+    colback=gray!8,
+    borderline west={4pt}{0pt}{gray!35},
+    sharp corners,
+    boxrule=0pt,
+    left=12pt,
+    right=10pt,
+    top=6pt,
+    bottom=6pt,
+    boxsep=0pt,
+    before skip=8pt,
+    after skip=8pt,
+    coltext=gray!70!black
+  ]
+}{
+  \end{tcolorbox}
+}
+
+\lstdefinestyle{codestyle}{
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{keywordblue}\bfseries,
+    commentstyle=\color{commentgreen},
+    stringstyle=\color{stringred},
+    numberstyle=\tiny\color{gray},
+    numbers=none,
+    breaklines=true,
+    tabsize=4,
+    showstringspaces=false,
+    aboveskip=0pt,
+    belowskip=0pt,
+}
+
+
+\lstset{style=codestyle}
+
+\newif\if@caption@set
+\@caption@setfalse
+\newcommand{\@listing@caption@text}{}
+\newcommand{\@listing@caption@number}{}
+
+\newcommand{\listingcaption}[1]{%
+  \refstepcounter{lstlisting}%
+  \@caption@settrue
+  \gdef\@listing@caption@text{#1}%
+  \xdef\@listing@caption@number{\thelstlisting}%
+}
+
+\BeforeBeginEnvironment{lstlisting}{%
+\begin{tcolorbox}[
+  enhanced,
+  colback=codegray,
+  colframe=gray!40,
+  arc=6pt,
+  outer arc=6pt,
+  boxrule=0.5pt,
+  left=12pt,
+  right=8pt,
+  top=8pt,
+  bottom=8pt,
+  boxsep=0pt,
+  before skip=6pt,
+  after skip=12pt,
+  breakable,
+  pad at break=2mm,
+]
+
+}
+\AfterEndEnvironment{lstlisting}{%
+  \end{tcolorbox}%
+  \if@caption@set
+    \vspace{-16pt}%
+    \begin{center}
+      \small\textsf{Listing \@listing@caption@number: \@listing@caption@text}
+    \end{center}%
+    \vspace{-8pt}%
+    \@caption@setfalse
+  \fi
+}
+
+% ============================================================
+% 6. Algorithm
+% ============================================================
+\RequirePackage{algorithm}
+\RequirePackage{algorithmic}
+
+% ============================================================
+% 7. Header and Footer
+% ============================================================
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small \csreportHeaderLeft}
+\fancyhead[R]{\small \leftmark}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\setlength{\headheight}{13.59999pt}
+\addtolength{\topmargin}{-1.59999pt}
+
+\fancypagestyle{plain}{
+  \fancyhf{}
+  \fancyhead[L]{\small \csreportHeaderLeft}
+  \fancyhead[R]{\small \leftmark}
+  \fancyfoot[C]{\thepage}
+  \renewcommand{\headrulewidth}{0.4pt}
+}
+
+% ============================================================
+% 8. Chapter and Section Style
+% ============================================================
+\titleformat{\chapter}
+  {\normalfont\Huge\bfseries\color{mainblue}}
+  {\thechapter}
+  {20pt}
+  {}
+
+\titleformat{\section}
+  {\normalfont\Large\bfseries\color{mainblue}}
+  {\thesection}
+  {1em}
+  {}
+
+\titleformat{\subsection}
+  {\normalfont\large\bfseries}
+  {\thesubsection}
+  {1em}
+  {}
+
+% ============================================================
+% 9. Report Metadata Defaults
+% ============================================================
+\newcommand{\csreportTitle}{Computer Science Project Report}
+\newcommand{\csreportSubtitle}{A Reusable LaTeX Report Template}
+\newcommand{\csreportAuthor}{Your Name}
+\newcommand{\csreportStudentID}{12345678}
+\newcommand{\csreportSupervisor}{Instructor / Supervisor}
+\newcommand{\csreportDepartment}{计算机科学与工程系}
+\newcommand{\csreportUniversity}{示例大学}
+\newcommand{\csreportDate}{\today}
+\newcommand{\csreportHeaderLeft}{计算机项目报告}
+\newcommand{\csreportType}{计算机高级程序设计项目报告}
+
+% ============================================================
+% 10. Metadata Setup Command
+% ============================================================
+\newcommand{\reporttitle}[1]{\renewcommand{\csreportTitle}{#1}}
+\newcommand{\reportsubtitle}[1]{\renewcommand{\csreportSubtitle}{#1}}
+\newcommand{\reportauthor}[1]{\renewcommand{\csreportAuthor}{#1}}
+\newcommand{\studentid}[1]{\renewcommand{\csreportStudentID}{#1}}
+\newcommand{\supervisor}[1]{\renewcommand{\csreportSupervisor}{#1}}
+\newcommand{\department}[1]{\renewcommand{\csreportDepartment}{#1}}
+\newcommand{\university}[1]{\renewcommand{\csreportUniversity}{#1}}
+\newcommand{\reportdate}[1]{\renewcommand{\csreportDate}{#1}}
+\newcommand{\reportheader}[1]{\renewcommand{\csreportHeaderLeft}{#1}}
+\newcommand{\reporttype}[1]{\renewcommand{\csreportType}{#1}}
+
+% ============================================================
+% 11. Title Page Command
+% ============================================================
+\newcommand{\makecsreporttitle}{
+\begin{titlepage}
+    \centering
+    \vspace*{2cm}
+
+    {\Huge\bfseries\heiti \csreportTitle \par}
+    \vspace{0.5cm}
+
+    {\Large\color{mainblue}\heiti \csreportSubtitle \par}
+    \vspace{2cm}
+
+    \begin{tabular}{rl}
+        {\bfseries\songti 作者：} & \csreportAuthor \\
+        {\bfseries\songti 学号：} & \csreportStudentID \\
+        {\bfseries\songti 指导教师：} & \csreportSupervisor \\
+        {\bfseries\songti 院系：} & \csreportDepartment \\
+        {\bfseries\songti 学校：} & \csreportUniversity \\
+        {\bfseries\songti 日期：} & \csreportDate \\
+    \end{tabular}
+
+    \vfill
+
+    {\large \csreportType}
+
+\end{titlepage}
+}
+
+% ============================================================
+% 12. Abstract Environment
+% ============================================================
+\newcommand{\csabstract}[1]{
+\chapter*{Abstract}
+\addcontentsline{toc}{chapter}{Abstract}
+#1
+}
+
+% ============================================================
+% 13. Front Matter Command
+% ============================================================
+\newcommand{\makefrontmatter}{
+\pagenumbering{roman}
+\tableofcontents
+\clearpage
+\pagenumbering{arabic}
+\onehalfspacing
+}
+
+% ============================================================
+% 14. Common Placeholder Figure
+% ============================================================
+\newcommand{\placeholderfigure}[2]{
+\begin{figure}[H]
+    \centering
+    \fbox{
+        \begin{minipage}{0.85\textwidth}
+            \centering
+            \vspace{0.5cm}
+            \Large #1
+
+            \vspace{0.5cm}
+            \normalsize #2
+            \vspace{0.5cm}
+        \end{minipage}
+    }
+    \caption{#1}
+\end{figure}
+}
+
+% ============================================================
+% 15. Useful Table Column Types
+% ============================================================
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+
+% ============================================================
+% End of csreport.sty
+% ============================================================
