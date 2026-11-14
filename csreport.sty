@@ -22,7 +22,11 @@
 % This package is intended to be compiled with XeLaTeX.
 \RequirePackage[UTF8,fontset=none]{ctex}
 \setmainfont{TeX Gyre Termes}
-\setmonofont{Maple Mono CN}
+% Code font: match VS Code's default editor font on macOS (Menlo),
+% falling back to Maple Mono CN on systems without Menlo.
+\IfFontExistsTF{Menlo}
+  {\setmonofont{Menlo}[Scale=MatchLowercase]}
+  {\setmonofont{Maple Mono CN}}
 \setCJKmainfont{Noto Serif CJK SC}
 \setCJKsansfont{Noto Sans CJK SC}
 \setCJKmonofont{Maple Mono CN}

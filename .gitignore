@@ -11,3 +11,4 @@
 *.toc
 *.xdv
 *.out
+.DS_Store
